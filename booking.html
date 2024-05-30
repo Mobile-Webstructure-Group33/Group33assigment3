@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings - United Tours and Travel Agency</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">United Tours</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white active" aria-current="page" href="bookings.html">Bookings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="comparison.html">Flight Comparison</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" aria-current="page" href="search.html">Flight Search</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+        <!-- Hero Section -->
+        <div class="container my-4">
+            <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+                <h1 class="display-4">Book This Flight!</h1>
+                <p class="lead">Enter your details and get your tickets for your flights.</p>
+             
+              
+            </div>
+        </div>
+
+<div class="container mt-4">
+    <h2>Flight Details</h2>
+    <div id="flightDetails" class="mb-4">
+        <!-- Flight details will be populated here -->
+    </div>
+
+    <h2>Book Your Ticket</h2>
+    <form id="bookingForm">
+        <div class="mb-3">
+            <label for="fullName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="fullName" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="numberOfTickets" class="form-label">Number of Tickets</label>
+            <input type="number" class="form-control" id="numberOfTickets" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+    </form>
+</div>
+
+
+
+    <!-- Footer -->
+    <footer class="footer mt-5 py-3 bg-dark">
+        <div class="container">
+            <span class="text-white">Follow us on social media for updates and more information.</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    
+
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const numberOfTickets = document.getElementById('numberOfTickets').value;
+        
+            swal({
+                title: "Confirm Booking",
+                text: `Are you sure you want to book ${numberOfTickets} tickets for ${fullName}?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willBook) => {
+                if (willBook) {
+                    swal("Booking Confirmed", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Booking Cancelled");
+                }
+            });
+        });
+        
+       // Function to parse URL query parameters
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+        // Displaying flight details from URL parameters
+        function displayFlightDetails() {
+            const airline = getQueryParam('airline');
+            const from = getQueryParam('from');
+            const to = getQueryParam('to');
+            const price = getQueryParam('price');
+            const stops = getQueryParam('stops');
+            const duration = getQueryParam('duration');
+            const model = getQueryParam('model');
+            const capacity = getQueryParam('capacity');
+            const classes = getQueryParam('classes') ? getQueryParam('classes').split(',') : [];
+            const features = getQueryParam('features') ? getQueryParam('features').split(',') : [];
+
+            const detailsHTML = `
+              <div class="card">
+                <div class="card-header text-center bg-primary text-white">
+                    <i class="fas fa-plane-departure" style="font-size:24px;"></i> ${airline}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">From ${from} to ${to}</h5>
+                    <p class="card-text"><strong>Price:</strong> <span class="badge bg-info">$${price}</span></p>
+                    <p class="card-text"><strong>Stops:</strong> <span class="badge bg-secondary">${stops}</span></p>
+                    <p class="card-text"><strong>Duration:</strong> <span class="badge bg-secondary">${duration}</span></p>
+                    <hr>    
+                    <p class="card-text"><strong>Airplane Model:</strong> ${model}, <strong>Seating Capacity:</strong> ${capacity}</p>
+                    <hr>
+                    <p class="card-text"><strong>Cabin Classes:</strong> ${classes.map(cabinClass => `<span class="badge bg-primary me-1">${cabinClass}</span>`).join('')}</p>
+                    <hr>
+                    <p class="card-text"><strong>Features:</strong> ${features.map(feature => `<span class="badge bg-success me-1">${feature}</span>`).join('')}</p>
+                </div>
+                </div>
+            `;
+            document.getElementById('flightDetails').innerHTML = detailsHTML;
+        }
+
+        window.onload = displayFlightDetails;
+            
+            </script>
+</body>
+</html>

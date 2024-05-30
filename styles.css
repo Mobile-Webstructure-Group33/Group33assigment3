@@ -1,0 +1,37 @@
+/* styles.css */
+
+/* Primary Color Override */
+:root {
+    --bs-primary: #c98714; /* Overrides the primary variable */
+}
+
+.btn-primary {
+    background-color: var(--bs-primary) !important; /* Ensures this color is used instead of default */
+    border-color: var(--bs-primary) !important;
+}
+
+.bg-primary {
+    background-color: var(--bs-primary) !important;
+}
+
+.text-primary {
+    color: var(--bs-primary) !important;
+}
+
+.border-primary {
+    border-color: var(--bs-primary) !important;
+}
+
+/* Additional components that use the primary color */
+.navbar-light .navbar-nav .nav-link.active {
+    color: var(--bs-primary) !important; /* Makes the active nav link use the new primary color */
+}
+
+.navbar-light .navbar-brand {
+    color: var(--bs-primary) !important;
+}
+
+/* Link hover effects if needed */
+a:hover {
+    color: darken(var(--bs-primary), 170%) !important; /* Darkens the color slightly on hover */
+}
